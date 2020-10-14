@@ -1,0 +1,71 @@
+<Query Kind="Program" />
+
+void Main()
+{
+var States = new []{
+		new[] {"ALABAMA","AL"},
+		new[] {"ALASKA","AK"},
+		new[] {"AMERICAN SAMOA","AS"},
+		new[] {"ARIZONA","AZ"},
+		new[] {"ARKANSAS","AR"},
+		new[] {"CALIFORNIA","CA"},
+		new[] {"COLORADO","CO"},
+		new[] {"CONNECTICUT","CT"},
+		new[] {"DELAWARE","DE"},
+		new[] {"DISTRICT OF COLUMBIA","DC"},
+		new[] {"FEDERATED STATES OF MICRONESIA","FM"},
+		new[] {"FLORIDA","FL"},
+		new[] {"GEORGIA","GA"},
+		new[] {"GUAM GU","GU"},
+		new[] {"HAWAII","HI"},
+		new[] {"IDAHO","ID"},
+		new[] {"ILLINOIS","IL"},
+		new[] {"INDIANA","IN"},
+		new[] {"IOWA","IA"},
+		new[] {"KANSAS","KS"},
+		new[] {"KENTUCKY","KY"},
+		new[] {"LOUISIANA","LA"},
+		new[] {"MAINE","ME"},
+		new[] {"MARSHALL ISLANDS","MH"},
+		new[] {"MARYLAND","MD"},
+		new[] {"MASSACHUSETTS","MA"},
+		new[] {"MICHIGAN","MI"},
+		new[] {"MINNESOTA","MN"},
+		new[] {"MISSISSIPPI","MS"},
+		new[] {"MISSOURI","MO"},
+		new[] {"MONTANA","MT"},
+		new[] {"NEBRASKA","NE"},
+		new[] {"NEVADA","NV"},
+		new[] {"NEW HAMPSHIRE","NH"},
+		new[] {"NEW JERSEY","NJ"},
+		new[] {"NEW MEXICO","NM"},
+		new[] {"NEW YORK","NY"},
+		new[] {"NORTH CAROLINA","NC"},
+		new[] {"NORTH DAKOTA","ND"},
+		new[] {"NORTHERN MARIANA ISLANDS","MP"},
+		new[] {"OHIO","OH"},
+		new[] {"OKLAHOMA","OK"},
+		new[] {"OREGON","OR"},
+		new[] {"PALAU","PW"},
+		new[] {"PENNSYLVANIA","PA"},
+		new[] {"PUERTO RICO","PR"},
+		new[] {"RHODE ISLAND","RI"},
+		new[] {"SOUTH CAROLINA","SC"},
+		new[] {"SOUTH DAKOTA","SD"},
+		new[] {"TENNESSEE","TN"},
+		new[] {"TEXAS","TX"},
+		new[] {"UTAH","UT"},
+		new[] {"VERMONT","VT"},
+		new[] {"VIRGIN ISLANDS","VI"},
+		new[] {"VIRGINIA","VA"},
+		new[] {"WASHINGTON","WA"},
+		new[] {"WEST VIRGINIA","WV"},
+		new[] {"WISCONSIN","WI"},
+		new[] {"WYOMING","WY"}
+	};
+	
+	
+	States.Dump();
+}
+
+// Define other methods and classes here

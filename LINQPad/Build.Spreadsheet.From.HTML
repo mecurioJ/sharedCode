@@ -1,0 +1,257 @@
+<Query Kind="Program">
+  <Reference Relative="Libs\spire.xls_7.10.79\NET4.0\Spire.Common.dll">C:\Users\joey\Dropbox\LinqPad\Libs\spire.xls_7.10.79\NET4.0\Spire.Common.dll</Reference>
+  <Reference Relative="Libs\spire.xls_7.10.79\NET4.0\Spire.License.dll">C:\Users\joey\Dropbox\LinqPad\Libs\spire.xls_7.10.79\NET4.0\Spire.License.dll</Reference>
+  <Reference Relative="Libs\spire.xls_7.10.79\NET4.0\Spire.Pdf.dll">C:\Users\joey\Dropbox\LinqPad\Libs\spire.xls_7.10.79\NET4.0\Spire.Pdf.dll</Reference>
+  <Reference Relative="Libs\spire.xls_7.10.79\NET4.0\Spire.XLS.dll">C:\Users\joey\Dropbox\LinqPad\Libs\spire.xls_7.10.79\NET4.0\Spire.XLS.dll</Reference>
+  <NuGetReference>HtmlAgilityPack</NuGetReference>
+  <Namespace>HtmlAgilityPack</Namespace>
+  <Namespace>Spire.CompoundFile.XLS</Namespace>
+  <Namespace>Spire.CompoundFile.XLS.Net</Namespace>
+  <Namespace>Spire.Xls</Namespace>
+  <Namespace>Spire.Xls.Calculation</Namespace>
+  <Namespace>Spire.Xls.Charts</Namespace>
+  <Namespace>Spire.Xls.Collections</Namespace>
+  <Namespace>Spire.Xls.Core</Namespace>
+  <Namespace>Spire.Xls.Core.Converter.Exporting.EMF</Namespace>
+  <Namespace>Spire.Xls.Core.Converter.Spreadsheet.ExcelStyle</Namespace>
+  <Namespace>Spire.Xls.Core.Converter.Spreadsheet.PivotTable</Namespace>
+  <Namespace>Spire.Xls.Core.Interface</Namespace>
+  <Namespace>Spire.Xls.Core.Interfaces</Namespace>
+  <Namespace>Spire.Xls.Core.Parser.Biff_Records</Namespace>
+  <Namespace>Spire.Xls.Core.Parser.Biff_Records.Charts</Namespace>
+  <Namespace>Spire.Xls.Core.Parser.Biff_Records.Formula</Namespace>
+  <Namespace>Spire.Xls.Core.Parser.Biff_Records.MsoDrawing</Namespace>
+  <Namespace>Spire.Xls.Core.Parser.Biff_Records.ObjRecords</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Charts</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Collections</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Parser.Biff_Records.Charts</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.PivotTables</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Security</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Shapes</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Sorting</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.Tables</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.TemplateMarkers</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.XmlReaders</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.XmlReaders.Shapes</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.XmlSerialization</Namespace>
+  <Namespace>Spire.Xls.Core.Spreadsheet.XmlSerialization.Charts</Namespace>
+  <Namespace>Spire.Xls.License</Namespace>
+</Query>
+
+void Main()
+{
+	HtmlDocument hDoc = new HtmlDocument();
+	hDoc.Load(@"D:\BrightView Analytics\TempWork\Nebraska Ed-Fi Data.html");
+	
+	var tBodies = new List<HtmlNode>();
+	
+	foreach(var tbody in hDoc.DocumentNode.SelectNodes("//table"))
+	{
+		var thisNode = tbody.SelectSingleNode("tbody");
+		
+		if(thisNode.InnerHtml.Contains("Data Element"))
+		{			
+			tBodies.Add(thisNode);
+		}
+	}
+	
+	
+	var tables = tBodies.Select(
+		tb => tb
+			.SelectNodes("tr")
+			.Select(tr => tr.SelectNodes("th|td"))
+			.Select(cell => cell.Select(cc => new TableCell { Name = cc.Name, Text = cc.InnerText } )
+			.Where(cc => cc.Name.Equals("td"))
+			)
+	);
+	
+	var dataObjects = new List<List<FieldMatrix>>();
+	
+	for (int t = 0; t < tables.Count(); t++)
+	{
+		var currTable = tables.ElementAt(t);
+		var dataTable = new List<FieldMatrix>();
+
+		for (int row = 0; row < currTable.Count(); row++)
+		{
+			var currRow = currTable.ElementAt(row);
+			if(currRow.Count() > 3)
+			{
+				var fm = new FieldMatrix()
+				{
+					DataElement = currRow.ElementAt(0).Text,
+					Description = currRow.ElementAt(1).Text,
+					Optional = currRow.ElementAt(2).Text,
+					CampusDatabaseField = currRow.ElementAt(3).Text,
+					CampusGUILocation = currRow.ElementAt(4).Text.Replace("&gt;",">")
+				};
+				dataTable.Add(fm);
+			}
+			
+		}
+		dataObjects.Add(dataTable);
+		
+	}
+	
+	
+#region CellList
+
+	var cellList = new []{
+	new KeyValuePair<int,String>(0,"A"),
+	new KeyValuePair<int,String>(1,"B"),
+	new KeyValuePair<int,String>(2,"C"),
+	new KeyValuePair<int,String>(3,"D"),
+	new KeyValuePair<int,String>(4,"E"),
+	new KeyValuePair<int,String>(5,"F"),
+	new KeyValuePair<int,String>(6,"G"),
+	new KeyValuePair<int,String>(7,"H"),
+	new KeyValuePair<int,String>(8,"I"),
+	new KeyValuePair<int,String>(9,"J"),
+	new KeyValuePair<int,String>(10,"K"),
+	new KeyValuePair<int,String>(11,"L"),
+	new KeyValuePair<int,String>(12,"M"),
+	new KeyValuePair<int,String>(13,"N"),
+	new KeyValuePair<int,String>(14,"O"),
+	new KeyValuePair<int,String>(15,"P"),
+	new KeyValuePair<int,String>(16,"Q"),
+	new KeyValuePair<int,String>(17,"R"),
+	new KeyValuePair<int,String>(18,"S"),
+	new KeyValuePair<int,String>(19,"T"),
+	new KeyValuePair<int,String>(20,"U"),
+	new KeyValuePair<int,String>(21,"V"),
+	new KeyValuePair<int,String>(22,"W"),
+	new KeyValuePair<int,String>(23,"X"),
+	new KeyValuePair<int,String>(24,"Y"),
+	new KeyValuePair<int,String>(25,"Z"),
+	new KeyValuePair<int,String>(26,"AA"),
+	new KeyValuePair<int,String>(27,"AB"),
+	new KeyValuePair<int,String>(28,"AC"),
+	new KeyValuePair<int,String>(29,"AD"),
+	new KeyValuePair<int,String>(30,"AE"),
+	new KeyValuePair<int,String>(31,"AF"),
+	new KeyValuePair<int,String>(32,"AG"),
+	new KeyValuePair<int,String>(33,"AH"),
+	new KeyValuePair<int,String>(34,"AI"),
+	new KeyValuePair<int,String>(35,"AJ"),
+	new KeyValuePair<int,String>(36,"AK"),
+	new KeyValuePair<int,String>(37,"AL"),
+	new KeyValuePair<int,String>(38,"AM"),
+	new KeyValuePair<int,String>(39,"AN"),
+	new KeyValuePair<int,String>(40,"AO"),
+	new KeyValuePair<int,String>(41,"AP"),
+	new KeyValuePair<int,String>(42,"AQ"),
+	new KeyValuePair<int,String>(43,"AR"),
+	new KeyValuePair<int,String>(44,"AS"),
+	new KeyValuePair<int,String>(45,"AT"),
+	new KeyValuePair<int,String>(46,"AU"),
+	new KeyValuePair<int,String>(47,"AV"),
+	new KeyValuePair<int,String>(48,"AW"),
+	new KeyValuePair<int,String>(49,"AX"),
+	new KeyValuePair<int,String>(50,"AY"),
+	new KeyValuePair<int,String>(51,"AZ"),
+	new KeyValuePair<int,String>(52,"BA"),
+	new KeyValuePair<int,String>(53,"BB"),
+	new KeyValuePair<int,String>(54,"BC"),
+	new KeyValuePair<int,String>(55,"BD"),
+	new KeyValuePair<int,String>(56,"BE"),
+	new KeyValuePair<int,String>(57,"BF"),
+	new KeyValuePair<int,String>(58,"BG"),
+	new KeyValuePair<int,String>(59,"BH"),
+	new KeyValuePair<int,String>(60,"BI"),
+	new KeyValuePair<int,String>(61,"BJ"),
+	new KeyValuePair<int,String>(62,"BK"),
+	new KeyValuePair<int,String>(63,"BL"),
+	new KeyValuePair<int,String>(64,"BM"),
+	new KeyValuePair<int,String>(65,"BN"),
+	new KeyValuePair<int,String>(66,"BO"),
+	new KeyValuePair<int,String>(67,"BP"),
+	new KeyValuePair<int,String>(68,"BQ"),
+	new KeyValuePair<int,String>(69,"BR"),
+	new KeyValuePair<int,String>(60,"BS"),
+	new KeyValuePair<int,String>(71,"BT"),
+	new KeyValuePair<int,String>(72,"BU"),
+	new KeyValuePair<int,String>(73,"BV"),
+	new KeyValuePair<int,String>(74,"BW"),
+	new KeyValuePair<int,String>(75,"BX"),
+	new KeyValuePair<int,String>(76,"BY"),
+	new KeyValuePair<int,String>(77,"BZ"),
+	new KeyValuePair<int,String>(78,"CA"),
+	new KeyValuePair<int,String>(79,"CB"),
+	new KeyValuePair<int,String>(80,"CC"),
+	new KeyValuePair<int,String>(81,"CD"),
+	new KeyValuePair<int,String>(82,"CE"),
+	new KeyValuePair<int,String>(83,"CF"),
+	new KeyValuePair<int,String>(84,"CG"),
+	new KeyValuePair<int,String>(85,"CH"),
+	new KeyValuePair<int,String>(86,"CI"),
+	new KeyValuePair<int,String>(87,"CJ"),
+	new KeyValuePair<int,String>(88,"CK"),
+	new KeyValuePair<int,String>(89,"CL"),
+	new KeyValuePair<int,String>(90,"CM"),
+	new KeyValuePair<int,String>(91,"CN"),
+	new KeyValuePair<int,String>(92,"CO"),
+	new KeyValuePair<int,String>(93,"CP"),
+	new KeyValuePair<int,String>(94,"CQ"),
+	new KeyValuePair<int,String>(95,"CR"),
+	new KeyValuePair<int,String>(96,"CS"),
+	new KeyValuePair<int,String>(97,"CT"),
+	new KeyValuePair<int,String>(98,"CU"),
+	new KeyValuePair<int,String>(99,"CV"),
+	new KeyValuePair<int,String>(100,"CW"),
+	new KeyValuePair<int,String>(101,"CX"),
+	new KeyValuePair<int,String>(102,"CY"),
+	new KeyValuePair<int,String>(103,"CZ")
+	};
+#endregion
+	
+	Workbook wb = new Workbook();
+	wb.LoadFromFile(@"D:\BrightView Analytics\Data Import Templates\TestRun.xlsx");
+	
+	for (int sheet = 0; sheet < dataObjects.Count(); sheet++)
+	{
+		//get each item in the list...
+		var workSheet = dataObjects.ElementAt(sheet);
+		var sht = wb.Worksheets.Add(string.Format("Sheet {0}", sheet));
+		
+		if(dataObjects.ElementAt(sheet).Count() > 0)
+		{
+		//workSheet.Select(t => t.DataElement).Aggregate((p,n) => String.Format("{0},{1}",p,n)).Replace("Â",String.Empty).Dump();
+		
+		//get each field Matrix Item in the list
+		for (int field = 0; field < workSheet.Count(); field++)
+		{
+			field.Dump();
+			var cellName = cellList[field].Value;
+			var cell = sht.Range[String.Format("{0}1",cellName)];
+			var cellContent = workSheet.ElementAt(field);
+			cell.Text = cellContent.DataElement.Replace("Â",String.Empty);
+			cell.Comment.Text = cellContent.Description.Replace("Â",String.Empty);	        
+			cell.Comment.AutoSize = true;
+			
+			//var current = workSheet.ElementAt(field).
+		}
+		}
+	}
+	
+	wb.SaveToFile(@"D:\BrightView Analytics\TempWork\ICMappingSheets.v1.xlsx");
+	
+	
+	//dataObjects.Count().Dump();
+	
+}// Define other methods and classes here
+
+public class TableCell 
+{
+	public String Name {get;set;}
+	public String Text {get;set;}
+}
+
+public class FieldMatrix
+{
+	public String DataElement {get;set;}
+	public String Description {get;set;}
+	public String Optional {get;set;}
+	public String CampusDatabaseField {get;set;}
+	public String CampusGUILocation {get;set;}
+}

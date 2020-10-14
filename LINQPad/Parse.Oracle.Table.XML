@@ -1,0 +1,26 @@
+void Main()
+{
+	var dirPath = @"\\bvaserver\nas\Projects\PowerSchool Schemas";
+	var xtn = ".xml";
+	var fileName = "psm_section";
+	
+	var pathConcat = string.Format(@"{0}\{1}{2}",dirPath,fileName,xtn);
+	
+	XElement tableDef = XElement.Load(pathConcat);
+	
+	tableDef.Elements("DATA_RECORD").Select(dr => new{
+		ColumnName = dr.Element("ColumnName").Value.TitleCase(),
+		Ordinal = dr.Element("ColID").Value,
+		isPrimaryKey = (dr.Elements().Where(xn => xn.Name.LocalName.Equals("PK")).Count() > 0),
+		isNullable =  (dr.Element("Null").Value.Equals("Y")),
+		DataType = dr.Element("DataType").Value
+		.Replace(" Char)",")")
+		.Replace("VARCHAR2","VARCHAR")
+		.Replace("NUMBER (","NUMERIC (")
+		.Replace(" (","(")
+		,
+		//source = dr
+	}).Dump();
+}
+
+// Define other methods and classes here

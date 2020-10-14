@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Laan.SQL.Parser</name>
+    </assembly>
+    <members>
+        <member name="M:Laan.Sql.Parser.Entities.CustomStatement.#ctor">
+            <summary>
+            Initializes a new instance of the BaseStatement class.
+            </summary>
+        </member>
+        <member name="T:Laan.Sql.Parser.Entities.ITableHints">
+            <summary>
+            Entity that can have table hints
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Expressions.Expression.#ctor(Laan.Sql.Parser.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the Expression class.
+            </summary>
+        </member>
+        <member name="T:Laan.Sql.Parser.Parsers.StatementParser`1">
+            <summary>
+            Base class for parsing an SQL statement
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Parsers.StatementParser`1.Execute">
+            <summary>
+            Returns an IStatement reference for the given statement type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Laan.Sql.Parser.CustomTokenizer.ExpectToken(System.String)">
+            <summary>
+            Verify current token matches expected token. Read next token if successful.
+            </summary>
+            <param name="token">Expected token</param>
+            <exception cref="T:Laan.Sql.Parser.Exceptions.ExpectedTokenNotFoundException">current token did not match</exception>
+        </member>
+        <member name="M:Laan.Sql.Parser.CustomTokenizer.ExpectTokens(System.String[])">
+            <summary>
+            Verify current tokens match expected tokens. Read next token if successful.
+            </summary>
+            <param name="tokens">Expected tokens</param>
+            <exception cref="T:Laan.Sql.Parser.Exceptions.ExpectedTokenNotFoundException">current token did not match</exception>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.BlockStatement.#ctor">
+            <summary>
+            Initializes a new instance of the BlockStatement class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.DeclareStatement.#ctor">
+            <summary>
+            Initializes a new instance of the DeclareStatement class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.ProjectionStatement.#ctor">
+            <summary>
+            Initializes a new instance of the BaseStatement class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.VariableDefinition.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the VariableDefinition class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Expressions.CaseExpression.#ctor(Laan.Sql.Parser.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the CaseExpression class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.IndexedColumn.#ctor">
+            <summary>
+            Initializes a new instance of the IndexedColumn class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Expressions.NegationExpression.#ctor(Laan.Sql.Parser.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the NegationExpression class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Expressions.NestedExpression.#ctor(Laan.Sql.Parser.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the NestedExpression class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Expressions.OperatorExpression.#ctor(Laan.Sql.Parser.Expressions.Expression)">
+            <summary>
+            Initializes a new instance of the OperatorExpression class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.Field.#ctor">
+            <summary>
+            Initializes a new instance of the Field class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.SortedField.#ctor">
+            <summary>
+            Initializes a new instance of the SortedField class.
+            </summary>
+            <param name="map"></param>
+        </member>
+        <member name="M:Laan.Sql.Parser.ITokenizer.IsNextToken(System.String[])">
+            <summary>
+            Returns true if <see cref="P:Laan.Sql.Parser.ITokenizer.Current"/> is contained in <paramref name="tokenSet"/>
+            </summary>
+            <param name="tokenSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Laan.Sql.Parser.ITokenizer.TokenEquals(System.String)">
+            <summary>
+            Check that the current token equals one of the supplied values.
+            If so the current token is advanced
+            </summary>
+            <param name="value">Tokens to compare</param>
+            <returns></returns>
+        </member>
+        <member name="M:Laan.Sql.Parser.ITokenizer.ExpectToken(System.String)">
+            <summary>
+            Verify current token matches expected token. Read next token if successful.
+            </summary>
+            <param name="token">Expected token</param>
+            <exception cref="T:Laan.Sql.Parser.Exceptions.ExpectedTokenNotFoundException">current token did not match</exception>
+        </member>
+        <member name="M:Laan.Sql.Parser.ITokenizer.ExpectTokens(System.String[])">
+            <summary>
+            Verify current tokens matche expected tokens. Read next token if successful.
+            </summary>
+            <param name="tokens">Expected tokens</param>
+            <exception cref="T:Laan.Sql.Parser.Exceptions.ExpectedTokenNotFoundException">current token did not match</exception>
+        </member>
+        <member name="M:Laan.Sql.Parser.Parsers.AlterStatementParser.#ctor(Laan.Sql.Parser.ITokenizer)">
+            <summary>
+            Initializes a new instance of the CreateStatementParser class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.RelationalIndexOption.#ctor">
+            <summary>
+            Initializes a new instance of the SortedField class.
+            </summary>
+            <param name="map"></param>
+        </member>
+        <member name="M:Laan.Sql.Parser.Parsers.CreateStatementParser.#ctor(Laan.Sql.Parser.ITokenizer)">
+            <summary>
+            Initializes a new instance of the CreateStatementParser class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.ParserFactory.#cctor">
+            <summary>
+            Initializes a new instance of the ParserFactory class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.ParserFactory.Execute``1(System.String)">
+            <summary>
+            This method is used if you know what type will be returned from the parser
+            - only use it if 100% confident, otherwise you will get a null reference
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Laan.Sql.Parser.ParserFactory.Execute(System.String)">
+            <summary>
+            This will parse any statement, and return only the interface (IStatement)
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Laan.Sql.Parser.Entities.Table.#ctor">
+            <summary>
+            Initializes a new instance of the Table class.
+            </summary>
+        </member>
+        <member name="M:Laan.Sql.Parser.RegexTokenizer.MatchCount(System.String,Laan.Sql.Parser.TokenDefinition@)">
+            <summary>
+            Returns the number of matches that the current token could be
+            </summary>
+            <param name="token"></param>
+            <param name="definition"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

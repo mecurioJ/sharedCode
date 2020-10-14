@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Latitude.Heimos.B2B</name>
+    </assembly>
+    <members>
+        <member name="T:Latitude.Heimos.B2B.Controllers.B2BAcknowledgmentController">
+            <summary>
+                Use this controller to process/handle purchase order
+                acknowledgements.
+            </summary>
+        </member>
+        <member name="M:Latitude.Heimos.B2B.Controllers.B2BAcknowledgmentController.Post">
+            <summary>
+            Use this 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Latitude.Heimos.B2B.Controllers.KeepAliveController">
+            <summary>
+            Internal Use Only!!!
+            </summary>
+        </member>
+        <member name="M:Latitude.Heimos.B2B.Controllers.KeepAliveController.PostPing">
+            <summary>
+            Internal Use Only!!!
+            </summary>
+            <returns>Will always return HttpStatusCode.OK</returns>
+        </member>
+        <member name="M:Latitude.Heimos.B2B.Controllers.QueueAvailabilityPostController.Post">
+            <summary>
+            Used to queue up a list of availability
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

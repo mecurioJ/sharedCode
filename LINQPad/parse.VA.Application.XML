@@ -1,0 +1,42 @@
+void Main()
+{
+	var items = XElement.Load(@"d:\VA\applications.xml");
+	
+	items.Elements().SelectMany(
+		app => app.Descendants().Where(xn => xn.Name.LocalName.Equals("Region_Collection")).First().Elements()
+				.Select(
+					rg => new{
+						ApplicationName = app.Name.LocalName,
+						Region = rg.Attribute("Region").Value,
+						VISN = rg.Element(rg.Name.Namespace+"Group1_Collection")
+									.Element(rg.Name.Namespace+"Group1").Attribute("Group1").Value,
+						Site = rg.Element(rg.Name.Namespace+"Group1_Collection")
+									.Element(rg.Name.Namespace+"Group1")
+									.Element(rg.Name.Namespace+"Group2_Collection")
+									.Element(rg.Name.Namespace+"Group2").Attribute("Group2").Value,
+						ReportedValues = rg.Element(rg.Name.Namespace+"Group1_Collection")
+									.Element(rg.Name.Namespace+"Group1")
+									.Element(rg.Name.Namespace+"Group2_Collection")
+									.Element(rg.Name.Namespace+"Group2")
+									.Elements()
+									.Where(a => a.HasAttributes)
+									.Select(e => new KeyValuePair<String,String>(
+										e.Attributes().FirstOrDefault().Name.LocalName, 
+										e.Attributes().FirstOrDefault().Value)).ToLookup(k => k.Key, k => k.Value)
+					}
+				)
+	
+	)
+	.Select(apv =>
+	new{
+		apv.ApplicationName,
+		apv.Region,
+		apv.VISN,
+		apv.Site,
+		TotalSystems = apv.ReportedValues["Evaluated_Systems5"].FirstOrDefault(),
+		apv.ReportedValues
+	})
+	.Dump();
+}
+
+// Define other methods and classes here

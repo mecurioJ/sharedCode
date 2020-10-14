@@ -1,0 +1,63 @@
+<Query Kind="Program">
+  <Connection>
+    <ID>81e4229d-d62c-4c2d-99b9-c54530ced9cd</ID>
+    <Persist>true</Persist>
+    <Server>JoeySurfacePro\MSSQL2016</Server>
+    <Database>NFLData</Database>
+  </Connection>
+  <NuGetReference>Newtonsoft.Json</NuGetReference>
+  <Namespace>Newtonsoft.Json</Namespace>
+  <Namespace>Newtonsoft.Json.Linq</Namespace>
+  <Namespace>Newtonsoft.Json.Serialization</Namespace>
+</Query>
+
+void Main()
+{
+	var game = RawSchedules.ToList().Where(g => !String.IsNullOrEmpty(g.GameData) && g.Season.Equals(2016)).Last();
+	
+	//Get the Game
+	var jGame = JObject.Parse(game.GameData);
+	
+	game.GameCenterURL.Dump();
+	
+	//game.Dump();
+	var gameScore = jGame[game.GameId.ToString()].SelectTokens("home.score").Select(
+		t => new{
+			GameId = t.Parent.Parent.Parent.Parent.Path,
+			Team = t.Parent.Parent.SelectToken("abbr"),
+			TimeOuts = t.Parent.Parent.SelectToken("to"),
+			First = t["1"],
+			Second = t["2"],
+			Third = t["3"],
+			Fourth = t["4"],
+			OverTime = t["5"],
+			Final = t["T"],
+		})
+	.Union(
+	jGame[game.GameId.ToString()].SelectTokens("away.score").Select(
+		t => new{
+			GameId = t.Parent.Parent.Parent.Parent.Path,
+			Team = t.Parent.Parent.SelectToken("abbr"),
+			TimeOuts = t.Parent.Parent.SelectToken("to"),
+			First = t["1"],
+			Second = t["2"],
+			Third = t["3"],
+			Fourth = t["4"],
+			OverTime = t["5"],
+			Final = t["T"],
+		})
+	).Dump();
+//	var away = jGame[game.GameId.ToString()]["away"].Dump();
+//	var drives = jGame[game.GameId.ToString()]["drives"].Dump();
+//	var scrsummary = jGame[game.GameId.ToString()]["scrsummary"].Dump();
+}
+
+public class home
+{
+	public object Score {get;set;}
+	public String Abbreviation {get;set;}
+	public int TimeOuts {get;set;}
+	public object Stats {get;set;}
+}
+
+

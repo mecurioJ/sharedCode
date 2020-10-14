@@ -1,0 +1,39 @@
+<Query Kind="Program">
+  <Reference>&lt;ProgramFilesX86&gt;\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Microsoft.Office.Interop.Excel.dll</Reference>
+  <Namespace>Microsoft.Office.Interop.Excel</Namespace>
+</Query>
+
+void Main()
+{
+	DirectoryInfo dir = new DirectoryInfo(@"D:\Proiects\LSPOG\Rev2\Archives\RD2");
+	
+	var file = 	dir.GetFiles("*.xlsb",SearchOption.AllDirectories)
+		.Select(nm => new{nm.FullName, SaveName = nm.FullName
+			.Replace(" ",".")
+			.Replace("..",".")
+			.Replace(".xlsb",".xlsx")
+		}
+		).ToList();
+	
+	foreach (var nameItem in file)
+	{
+			Application app = new Application();
+			app.Visible = true;
+			Workbook workbook = app.Workbooks.Open(
+			nameItem.FullName, XlUpdateLinks.xlUpdateLinksNever, true, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing	);
+			
+			workbook.SaveAs(
+			nameItem.SaveName
+			, XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+			
+			workbook.Close(false, Type.Missing, Type.Missing);
+			
+			app.Quit();
+	}
+	
+	
+
+
+}
+
+// Define other methods and classes here
